@@ -36,4 +36,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function results(){
+        return $this->hasMany(Result::class);
+    }
+    public function IsStudent(){
+        return $this->role == 3;
+    }
+    public function IsAdmin(){
+        return $this->role == 1;
+    }
+    public function IsTeacher(){
+        return $this->role == 2;
+    }
+
 }

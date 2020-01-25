@@ -16,19 +16,19 @@
                 Otázka:<input name="otazky[0][otazka]">
                 <div class="answer">
                     a):<input name="otazky[0][odpoved][0][odpoved]">
-                    <input type="checkbox" name="otazky[0][odpoved][0][spravna]">
+                    <input type="checkbox" name="otazky[0][odpoved][0][spravna]">Správna odpoveď
                 </div>
                 <div class="answer">
                     b):<input name="otazky[0][odpoved][1][odpoved]">
-                    <input type="checkbox" name="otazky[0][odpoved][1][spravna]">
+                    <input type="checkbox" name="otazky[0][odpoved][1][spravna]">Správna odpoveď
                 </div>
                 <div class="answer">
                     c):<input name="otazky[0][odpoved][2][odpoved]">
-                    <input type="checkbox" name="otazky[0][odpoved][2][spravna]">
+                    <input type="checkbox" name="otazky[0][odpoved][2][spravna]">Správna odpoveď
                 </div>
                 <div class="answer">
                     d):<input name="otazky[0][odpoved][3][odpoved]">
-                    <input type="checkbox" name="otazky[0][odpoved][3][spravna]">
+                    <input type="checkbox" name="otazky[0][odpoved][3][spravna]">Správna odpoveď
                 </div>
             </div>
         </div>

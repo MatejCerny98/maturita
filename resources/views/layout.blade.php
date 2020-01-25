@@ -32,8 +32,10 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('učivo') }}">Učivo</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route('vytvorucivo') }}">Vytvoriť učebné materiály </a>
+                        @if(Auth::user() && (Auth::user()->IsTeacher() || Auth::user()->IsAdmin()))
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('vytvorucivo') }}">Vytvoriť učebné materiály </a>
+                        @endif
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -44,51 +46,72 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('test') }}">Otestuj sa</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route('test.create') }}">Vytvor test</a>
+                        @if(Auth::user() && (Auth::user()->IsTeacher() || Auth::user()->IsAdmin()))
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('test.create') }}">Vytvor test</a>
+                        @endif
                     </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        Známky
+                        @if(Auth::user())
+                            {{Auth::user()->name}}
+                        @else
+                            Môj Profil
+                        @endif
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Moje známky</a>
+                        @if(Auth::user())
+                            <a class="dropdown-item" href="#">Moje známky</a>
+                            @if(Auth::user()->IsAdmin())
+                                <a class="dropdown-item" href="/users">Správca užívateľov</a>
+                            @endif
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"
+                               onclick="event.preventDefault(); document.getElementById('logout').submit()">Odhlásiť</a>
+                        @else
+                            <a class="dropdown-item" href="/login">Prihlásiť sa</a>
+                            <a class="dropdown-item" href="/register">Registrácia</a>
+                        @endif
                     </div>
                 </li>
             </div>
         </div>
-        <a href="/login"><button type="submit">Prihlásiť</button></a>
-        <form action="{{route('logout')}}" method="post">
+        <form action="{{route('logout')}}" method="post" id="logout">
             @csrf
-            <button type="submit">Odhlásiť</button>
         </form>
-        <a href="/register"><button type="submit">Registrácia</button></a>
+        <div class="" id="google_translate_element"></div>
+
     </nav>
 </header>
 <script type="text/javascript"> //Prekladač
     function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'sk', includedLanguages: 'cs,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        new google.translate.TranslateElement({
+            pageLanguage: 'sk',
+            includedLanguages: 'cs,en',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
     }
 
     function changeGoogleStyles() {
-        if(($goog = $('.goog-te-menu-frame').contents().find('body')).length) {
-            var stylesHtml = '<style>'+
-                '.goog-te-menu2 {'+
-                'max-width:100% !important;'+
-                'overflow:scroll !important;'+
-                'box-sizing:border-box !important;'+
-                'height:auto !important;'+
-                'color:black !important;'+
-                '}'+
+        if (($goog = $('.goog-te-menu-frame').contents().find('body')).length) {
+            var stylesHtml = '<style>' +
+                '.goog-te-menu2 {' +
+                'max-width:100% !important;' +
+                'overflow:scroll !important;' +
+                'box-sizing:border-box !important;' +
+                'height:auto !important;' +
+                'color:black !important;' +
+                '}' +
                 '</style>';
             $goog.prepend(stylesHtml);
         } else {
             setTimeout(changeGoogleStyles, 50);
         }
     }
+
     changeGoogleStyles();
 </script>
 
@@ -102,7 +125,7 @@
 
     <!-- FOOTER -->
     <footer class="container">
-        <p>&copy; 2019-2020 · I Testing by Matěj Černý · v1.0 <div class="" id="google_translate_element"></div></p>
+        <p>&copy; 2019-2020 · I Testing by Matěj Černý · v1.0 </p>
 
     </footer>
 </main>
@@ -116,7 +139,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 @stack('scripts')
 </body>
 </html>

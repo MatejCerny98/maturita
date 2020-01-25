@@ -15,6 +15,7 @@ Route::group(['middleware' => ['isAdmin']], function () {
     Route::get('/ucivo/{ucivo}/edit', 'UcivoController@edit')->name('ucivo.edit');
     Route::put('/ucivo/{ucivo}', 'UcivoController@update')->name('ucivo.update');
     Route::post('/users/{user}/change-role/{role}', 'UsersController@changeRole')->name('users.changerole');
+    Route::resource('users', 'UsersController')->except(['create', 'store']);
 });
 Route::group(['middleware' => ['isTeacher']], function () {
     Route::get('/ucivo/create', 'UcivoController@create')->name('ucivo.create');
@@ -23,6 +24,7 @@ Route::group(['middleware' => ['isTeacher']], function () {
     Route::get('/ucivo/{ucivo}', 'UcivoController@show')->name('ucivo.show');
     Route::get('/ucivo/{ucivo}/edit', 'UcivoController@edit')->name('ucivo.edit');
     Route::post('/users/{user}/change-role/{role}', 'UsersController@changeRole')->name('users.changerole');
+    Route::resource('users', 'UsersController')->except(['create', 'store']);
 });
 Route::group(['middleware' => ['isStudent']], function () {
     Route::get('/ucivo', 'UcivoController@index')->name('ucivo.index');
@@ -35,8 +37,6 @@ Route::get('/', function () {
 })->name('home');
 Route::post('/ucivo', 'UcivoController@store')->name('ucivo.store');
 
-
-Route::resource('users', 'UsersController')->except(['create', 'store']);
 
 Route::get('/testController', function () {
     return view('test');
@@ -60,6 +60,7 @@ Route::get('/test', 'testController@index')->name('test.index');
 Route::get('/test/{id}', 'testController@show')->name('test.show');
 Route::get('/vytvortest', 'testController@create')->name('test.create');
 Route::post('/test', 'testController@store')->name('test.store');
+Route::post('/test/{id}/validate', 'testController@validateTest')->name('test.validate');
 
 
 //Route::resource('ucivo', 'UcivoController');
@@ -70,3 +71,4 @@ Route::post('/test', 'testController@store')->name('test.store');
 //Route::delete('/ucivo/{ucivo}', 'UcivoController@destroy')->name('ucivo.destroy');
 //Route::get('/ucivo/{ucivo}', 'UcivoController@show')->name('ucivo.show');
 //Route::get('/ucivo/{ucivo}/eidt', 'UcivoController@edit')->name('ucivo.edit');
+//Route::resource('users', 'UsersController')->except(['create', 'store']);

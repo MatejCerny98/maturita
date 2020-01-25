@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Answer;
 use App\Question;
+use App\Result;
 use App\Test;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class testController extends Controller
 {
@@ -53,13 +55,41 @@ class testController extends Controller
         }
         return redirect()->route('test.index');
     }
-    public function show($id){
-        $test=Test::where('id', $id)->with(['questions' => function($q) {
+
+    public function show($id)
+    {
+        $test = Test::where('id', $id)->with(['questions' => function ($q) {
             $q->with('answers');
         }])->first();
         return view('test')->with(['test' => $test]);
 
 
+    }
+
+    public function validateTest(Request $request, $id)
+    {
+        $this->validate($request, [
+            'odpoved' => 'required|array',
+        ]);
+
+        $test = Test::find($id);
+        if (!$test) {
+            return redirect()->route('test.index');
+        }
+        $pocetspravnych = 0;
+        foreach ($request->odpoved as $otazka => $odpoved) {
+            if ($o = Answer::find($odpoved)) {
+                if ($o->spravna) {
+                    $pocetspravnych++;
+                }
+            }
+        }
+        $vysledok=new Result();
+        $vysledok->test()->associate($test);
+        $vysledok->user()->associate(Auth::user());
+        $vysledok->spravne=$pocetspravnych;
+        $vysledok->save();
+        return redirect()->route('test.index');
     }
 }
 
