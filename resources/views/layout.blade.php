@@ -45,7 +45,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('test') }}">Otestuj sa</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route('vytvortest') }}">Vytvor test</a>
+                        <a class="dropdown-item" href="{{ route('test.create') }}">Vytvor test</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -117,6 +117,6 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
+@stack('scripts')
 </body>
 </html>

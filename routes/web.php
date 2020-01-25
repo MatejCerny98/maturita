@@ -38,15 +38,13 @@ Route::post('/ucivo', 'UcivoController@store')->name('ucivo.store');
 
 Route::resource('users', 'UsersController')->except(['create', 'store']);
 
-Route::get('/test', function () {
+Route::get('/testController', function () {
     return view('test');
 })->name('test');
 
 Route::get('/učivo', 'UcivoController@index')->name('učivo');
 
-Route::get('/vytvortest', function () {
-    return view('vytvortest');
-})->name('vytvortest');
+
 
 Route::get('/vytvorucivo', function () {
     return view('vytvorucivo');
@@ -58,6 +56,10 @@ Route::get('/home');
 
 Auth::routes();
 
+Route::get('/test', 'testController@index')->name('test.index');
+Route::get('/test/{id}', 'testController@show')->name('test.show');
+Route::get('/vytvortest', 'testController@create')->name('test.create');
+Route::post('/test', 'testController@store')->name('test.store');
 
 
 //Route::resource('ucivo', 'UcivoController');
