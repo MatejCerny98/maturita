@@ -48,5 +48,7 @@ class User extends Authenticatable
     public function IsTeacher(){
         return $this->role == 2;
     }
-
+    public function group(){
+        return $this->belongsTo(Group::class);
+    }
 }

@@ -61,7 +61,12 @@ class testController extends Controller
         $test = Test::where('id', $id)->with(['questions' => function ($q) {
             $q->with('answers');
         }])->first();
+        if (!$test || !$test->spusteny)
+        {
+            return redirect()->back();
+        }
         return view('test')->with(['test' => $test]);
+
 
 
     }
@@ -91,5 +96,23 @@ class testController extends Controller
         $vysledok->save();
         return redirect()->route('test.index');
     }
+    public function grades(){
+        $znamka= Result::with('test')->where('user_id', Auth::user()->id)->get();
+        return view('znamky')->with(['znamky' => $znamka]);
+    }
+    public function start($id){
+        $zacat= Test::find($id);
+        $zacat->spusteny=true;
+        $zacat->save();
+        return redirect()->back();
+    }
+    public function stop($id)
+    {
+        $zastavit = Test::find($id);
+        $zastavit->spusteny = false;
+        $zastavit->save();
+        return redirect()->back();
+    }
+
 }
 

@@ -64,7 +64,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         @if(Auth::user())
-                            <a class="dropdown-item" href="#">Moje známky</a>
+                            <a class="dropdown-item" href="/znamky">Moje známky</a>
                             @if(Auth::user()->IsAdmin())
                                 <a class="dropdown-item" href="/users">Správca užívateľov</a>
                             @endif

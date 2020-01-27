@@ -45,7 +45,6 @@ Route::get('/testController', function () {
 Route::get('/učivo', 'UcivoController@index')->name('učivo');
 
 
-
 Route::get('/vytvorucivo', function () {
     return view('vytvorucivo');
 })->name('vytvorucivo');
@@ -61,6 +60,10 @@ Route::get('/test/{id}', 'testController@show')->name('test.show');
 Route::get('/vytvortest', 'testController@create')->name('test.create');
 Route::post('/test', 'testController@store')->name('test.store');
 Route::post('/test/{id}/validate', 'testController@validateTest')->name('test.validate');
+Route::get('/znamky', 'testController@grades')->name('test.grades');
+Route::post('/test/{id}/start', 'testController@start')->name('test.start');
+Route::post('/test/{id}/stop', 'testController@stop')->name('test.stop');
+Route::post('/group/{userid}/add', 'GroupController@add')->name('group.add');
 
 
 //Route::resource('ucivo', 'UcivoController');

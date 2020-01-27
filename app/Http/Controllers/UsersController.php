@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,9 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::all();
+        $group = Group::all();
 
-        return view('users.index')->with(['users' => $users]);
+        return view('users.index')->with(['users' => $users, 'groups' => $group]);
     }
 
 
